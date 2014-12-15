@@ -10,7 +10,7 @@ uniform mat4 mvpMatrix;
 
 out vec3 vertex_position;
 out vec3 vertex_normal;
-out vec3 vertex_texcoord;
+out vec2 vertex_texcoord;
 
 void main()
 {
@@ -18,7 +18,7 @@ void main()
 
   vertex_position = position;
   vertex_normal = normal;
-  vertex_texcoord = texcoord;
+  vertex_texcoord = normalize(texcoord).st;
 }
 
 #endif
@@ -27,7 +27,7 @@ void main()
 
 in vec3 vertex_position;
 in vec3 vertex_normal;
-in vec3 vertex_texcoord;
+in vec2 vertex_texcoord;
 
 uniform sampler2D image;
 
@@ -37,7 +37,7 @@ void main( )
 {
   vec3 n = normalize(vertex_normal);
 
-  fragment_color.rgb = texture(image, vertex_texcoord.xy).rgb * abs(n.z);
+  fragment_color.rgb = texture(image, vertex_texcoord).rgb * abs(n.z);
 }
 
 #endif
